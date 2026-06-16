@@ -1,5 +1,9 @@
 const path = require('path');
 
 module.exports = {
+<<<<<<< HEAD
   config: path.resolve('config', 'config.cjs'),
+=======
+  config: path.resolve('config', 'config.js'),
+>>>>>>> b2b21967dba888ce7fa9cf441131bce775102ef1
 };
