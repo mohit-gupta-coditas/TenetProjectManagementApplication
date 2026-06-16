@@ -6,6 +6,6 @@ export const hashPassword = async (password: string) => {
     const hashedPassword = await hash(password, salt);
     return hashedPassword;
   } catch(err) {
-    throw {message: 'SOMETHING WENT WRONG'};
+    throw {statusCode: 500,message: 'ERROR WHILE HASHING PASSWORD'};
   }
 }

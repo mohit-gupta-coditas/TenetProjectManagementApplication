@@ -21,7 +21,6 @@ export const setOTP = async (user_email: string, otpData : OtpData, expiry: numb
       }
     );
   } catch(err) {
-    console.error("huhu",err);
     throw err;
   }
 }
