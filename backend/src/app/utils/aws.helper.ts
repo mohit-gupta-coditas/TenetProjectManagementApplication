@@ -42,8 +42,6 @@ export const sendEmail = async (
 
     await sesClient.send(command);
   } catch(err) {
-        console.log("error in dses..........................")
-
     throw err;
   }
 };

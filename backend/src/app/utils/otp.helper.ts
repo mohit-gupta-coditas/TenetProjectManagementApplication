@@ -1,7 +1,7 @@
 import { client } from "../connections/redis.connection.js";
 
 export type OtpData = {
-  otp: number,
+  otp: string,
   retries: number,
   createTime: number
 }
@@ -21,7 +21,6 @@ export const setOTP = async (user_email: string, otpData : OtpData, expiry: numb
       }
     );
   } catch(err) {
-    console.error("huhu",err);
     throw err;
   }
 }
