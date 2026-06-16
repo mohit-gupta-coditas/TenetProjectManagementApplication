@@ -15,14 +15,14 @@ export default {
 
     await queryInterface.insert(
       null,
-      'companies', 
+      'users',
       {
-        name: 'darshan',
-        email: 'darshan@coditas.com',
-        logoUrl: 'jskfjsajfajfla',
-        subscription: 'half'
+        name: 'Mohit',  
+        email: 'darshan.deshmukh@coditas.com',
+        password: 'admin',
+        globalRole: 'admin'  
       }
-    );
+    )
   },
 
   async down (queryInterface, Sequelize) {

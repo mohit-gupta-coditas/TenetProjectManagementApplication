@@ -2,8 +2,10 @@ import { json, type Application, type NextFunction, type Request, type Response 
 import helmet from "helmet";
 import { routes } from "./routes.data.js";
 import { ResposneHandler } from "../utils/response.handler.js";
+import cors from "cors";
 
 export const registerMiddlewares = (app : Application) => {
+  app.use(cors());
   app.use(helmet());
   app.use(json());
 

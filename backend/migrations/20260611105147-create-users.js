@@ -20,7 +20,8 @@ export default {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue: null
       },  
       email: {
         type: DataTypes.STRING,
@@ -28,7 +29,8 @@ export default {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue: null
       },
       companyId: {
         type: DataTypes.UUID,

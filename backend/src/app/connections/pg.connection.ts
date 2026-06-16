@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import { env } from "../../validate.env.js";
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   env.DB_NAME,
   env.DB_USERNAME,
   env.DB_PASSWORD,

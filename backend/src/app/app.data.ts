@@ -1,8 +1,11 @@
-enum SUBSCRIPTION {
+export enum SUBSCRIPTION {
   HALF = 'half',
   FULL = 'full',
   BASIC = 'basic'
 }
-export default {
-  SUBSCRIPTION
+
+export enum GLOBAL_ROLE {
+  SUPERADMIN = 'superAdmin',
+  ADMIN = 'admin',
+  MEMBER = 'member'
 }
