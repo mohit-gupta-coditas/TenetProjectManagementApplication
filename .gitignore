@@ -22,7 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 
 .env
 private.key
 public.key
+=======
+>>>>>>> 26a74626fefb14498671629e9417dd63f15ad18f
