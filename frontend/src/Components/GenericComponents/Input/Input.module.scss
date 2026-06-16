@@ -1,0 +1,36 @@
+@use "../../Styles/variables" as *;
+
+.shiftinput{
+  padding: 0.25rem 1.25rem 0.25rem 0.25rem;
+  background-color: $inHold-color;
+  border-radius: 10px;
+}
+.shiftgroup {
+    position: relative;
+}
+.shiftinput:placeholder-shown + .shiftlabel  {
+  opacity: 0;
+}
+.shiftinput + .shiftlabel {
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  font-size: 12px;
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: opacity 0.2s ease;
+}
+
+.shiftinput:focus::placeholder {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.shiftinput:focus{
+  background-color: white;
+}
+
+.shiftinput:focus + .shiftlabel,
+.shiftinput:not(:placeholder-shown) + .shiftlabel {
+  opacity: 1;
+}
