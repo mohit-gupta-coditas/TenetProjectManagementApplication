@@ -14,7 +14,9 @@ const envSchema = z.object({
   REDIS_PORT: z.coerce.number(),
   REDIS_PASSWORD: z.string(),
   REDIS_USERNAME: z.string(),
-  OTP_TIMER: z.coerce.number()
+  OTP_TIMER: z.coerce.number(),
+  ACCESS_TOKEN_TIME: z.coerce.number(),
+  REFRESH_TOKEN_TIME: z.coerce.number()
 });
 
 export const env = envSchema.parse(process.env);

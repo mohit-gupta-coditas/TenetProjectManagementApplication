@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const signToken = (payload: string, secret_key: string, time: number) => {
+export const signToken = (payload: any, secret_key: string, time: number) => {
   return jwt.sign(
     payload,
     secret_key,
