@@ -20,7 +20,8 @@ CompanySchema.init({
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   logoUrl: {
     type: DataTypes.STRING,

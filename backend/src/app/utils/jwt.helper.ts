@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import type { Payload } from "../app.types.js";
 
-export const signToken = (payload: any, secret_key: string, time: number) => {
+export const signToken = (payload: Payload, secret_key: string, time: number) => {
   return jwt.sign(
     payload,
     secret_key,

@@ -6,7 +6,7 @@ const getUser = async (user: Partial<User>) => {
   try {
     const oldUser = await userRepo.getUser(user);
     if(!oldUser) throw USER_RESPONSE.USER_NOT_FOUND;
-    return {...USER_RESPONSE.USER_FOUND, user: oldUser};
+    return oldUser;
   } catch(err) {
     throw err;
   }
