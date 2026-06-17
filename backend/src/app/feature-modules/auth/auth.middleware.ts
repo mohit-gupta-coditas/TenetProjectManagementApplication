@@ -13,12 +13,8 @@ export const authMiddleware = async(req: Request, res: Response, next: NextFunct
     if(typeof decoded !== 'string') {
       req.payload = {
         userId: decoded.userId,
-<<<<<<< HEAD
         companyId: decoded.companyId,
         globalRole: decoded.globalRole
-=======
-        companyId: decoded.companyId
->>>>>>> b2b21967dba888ce7fa9cf441131bce775102ef1
       }
     }
 

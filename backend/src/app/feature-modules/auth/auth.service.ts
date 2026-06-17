@@ -26,7 +26,7 @@ const sendOTP = async (email: string) => {
       email, 
       {
         otp: hashedOTP,
-        retries: 3,
+        retries: 4,
         createTime: Date.now()
       },
       env.OTP_TIMER

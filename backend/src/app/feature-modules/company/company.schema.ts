@@ -8,7 +8,7 @@ export class CompanySchema extends Model<InferAttributes<CompanySchema>, InferCr
   declare email: string;
   declare logoUrl: string;
   declare subscription: string;
-  declare isDeleted: string;
+  declare isDeleted: CreationOptional<boolean>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

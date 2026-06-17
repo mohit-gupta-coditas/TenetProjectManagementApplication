@@ -1,0 +1,22 @@
+import { ResponseFormat } from "../../utils/response.format.js";
+
+export const COMPANY_RESPONSE : Record<
+  "COMPANY_CREATED" |
+  "COMPANY_NOT_CREATED" |
+  "COMPANY_NOT_FOUND" |
+  "COMPANY_FOUND" |
+  "COMPANY_UPDATED" |
+  "COMPANY_NOT_UPDATED" |
+  "COMPANY_ARCHIVED" |
+  "COMPANY_NOT_ARCHIVED"
+  , ResponseFormat
+> = {
+  COMPANY_CREATED: new ResponseFormat(201, "COMPANY CREATED"),
+  COMPANY_NOT_CREATED: new ResponseFormat(400, "COMPANY NOT CREATED"),
+  COMPANY_FOUND: new ResponseFormat(200, "COMPANY FOUND"),
+  COMPANY_NOT_FOUND: new ResponseFormat(404, "COMPANY NOT FOUND"),
+  COMPANY_UPDATED: new ResponseFormat(200, "COMPANY UPDATED"),
+  COMPANY_NOT_UPDATED: new ResponseFormat(400, "COMPANY NOT UPDATED"),
+  COMPANY_ARCHIVED: new ResponseFormat(200, "COMPANY ARCHIVED"),
+  COMPANY_NOT_ARCHIVED: new ResponseFormat(400, "COMPANY NOT ARCHIVED")
+}

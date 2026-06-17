@@ -1,7 +1,6 @@
 import z from "zod";
 
 const envSchema = z.object({
-<<<<<<< HEAD
   PORT: z.coerce.number('PORT must be a number'),
   DB_NAME: z.string('DB_NAME must be a valid string'),
   DB_USERNAME: z.string('DB_USERNAME must be a valid string'),
@@ -17,25 +16,8 @@ const envSchema = z.object({
   REDIS_USERNAME: z.string('REDIS_USERNAME must be a valid string'),
   OTP_TIMER: z.coerce.number('OTP_TIMER must be a number'),
   ACCESS_TOKEN_TIME: z.coerce.number('ACCESS_TOKEN_TIME must be a number'),
-  REFRESH_TOKEN_TIME: z.coerce.number('REFRESH_TOKEN_TIME must be a number')
-=======
-  PORT: z.coerce.number('PORT must be a nubmer'),
-  DB_NAME: z.string(),
-  DB_USERNAME: z.string(),
-  DB_PASSWORD: z.string(),
-  AWS_REGION: z.string(),
-  AWS_ACCESS_KEY: z.string(),
-  AWS_SECRET_ACCESS_KEY: z.string(),
-  SES_SENDER_EMAIL: z.string(),
-  SQS_QUEUE_URL: z.string(),
-  REDIS_HOST: z.string(),
-  REDIS_PORT: z.coerce.number(),
-  REDIS_PASSWORD: z.string(),
-  REDIS_USERNAME: z.string(),
-  OTP_TIMER: z.coerce.number(),
-  ACCESS_TOKEN_TIME: z.coerce.number(),
-  REFRESH_TOKEN_TIME: z.coerce.number()
->>>>>>> b2b21967dba888ce7fa9cf441131bce775102ef1
+  REFRESH_TOKEN_TIME: z.coerce.number('REFRESH_TOKEN_TIME must be a number'),
+  AWS_S3_BUCKET_NAME: z.string('Name must be a valid string')
 });
 
 export const env = envSchema.parse(process.env);

@@ -15,6 +15,10 @@ const getUser = async (user: Partial<User>) => {
 const createUser = async (user: Pick<User, 'email'|'globalRole'|'createdBy'>) => {
   try {
     const oldUser = await userRepo.getUser({email: user.email});
+    if(oldUser) throw USER_RESPONSE.USER_ALREADY_EXISTS;
+
+    await userRepo.createUser(user);
+    return USER_RESPONSE.USER_CREATED;
   } catch(err) {
     throw USER_RESPONSE.USER_NOT_CREATED;
   }
