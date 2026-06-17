@@ -21,4 +21,20 @@
     cursor: not-allowed; 
   }
 }
+.Primary {
+    
+    --color: rgb(40, 91, 186);
+    --background-color: white;
+}
 
+.Secondary {
+  
+    --color: red;
+    --background-color: white;
+}
+
+.Tertiary {
+    
+    --color: green;
+    --background-color: white;
+}
