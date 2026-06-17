@@ -2,12 +2,13 @@ import { compare } from "bcryptjs";
 import { env } from "../../../validate.env.js";
 import { client } from "../../connections/redis.connection.js";
 import { sendToSQS } from "../../utils/aws.helper.js";
-import { hashPassword } from "../../utils/hash.password.js";
+import { hashOTP } from "../../utils/hash.password.js";
 import { signToken } from "../../utils/jwt.helper.js";
 import { privateKey } from "../../utils/jwt.keys.js";
 import { setOTP } from "../../utils/otp.helper.js";
 import userService from "../user/user.service.js";
 import { AUTH_RESPONSE } from "./auth.response.js"; 
+import type { GLOBAL_ROLE } from "../../app.data.js";
 
 const sendOTP = async (email: string) => {
   try {
@@ -20,7 +21,7 @@ const sendOTP = async (email: string) => {
     const exists = await client.get(`otp_${email}`);
     if(exists) await client.del(`otp_${email}`);
 
-    const hashedOTP = await hashPassword(`${randomOTP}`);
+    const hashedOTP = await hashOTP(`${randomOTP}`);
 
     await setOTP(
       email, 
@@ -81,7 +82,7 @@ const verifyOTP = async (otp: number, email: string) => {
       {
         userId: currentUser.user.id,
         companyId: currentUser.user.companyId,
-        globalRole: currentUser.user.globalRole
+        globalRole: currentUser.user.globalRole as GLOBAL_ROLE
       },
       privateKey,
       env.ACCESS_TOKEN_TIME
@@ -91,7 +92,7 @@ const verifyOTP = async (otp: number, email: string) => {
       {
         userId: currentUser.user.id,
         companyId: currentUser.user.companyId,
-        globalRole: currentUser.user.globalRole
+        globalRole: currentUser.user.globalRole as GLOBAL_ROLE
       },
       privateKey,
       env.REFRESH_TOKEN_TIME

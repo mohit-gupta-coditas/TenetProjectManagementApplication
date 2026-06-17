@@ -1,5 +1,7 @@
+type GLOBAL_ROLE = 'superAdmin' | 'admin' | 'member';
+
 export interface Payload{
   userId: string;
   companyId: string;
-  globalRole: 'superAdmin' | 'admin' | 'member'
+  globalRole: GLOBAL_ROLE
 }

@@ -2,6 +2,7 @@ import { DataTypes, Model, Sequelize, type CreationOptional, type InferAttribute
 import { sequelize } from "../../connections/pg.connection.js";
 import { CompanySchema } from "../company/company.schema.js";
 
+
 export class UserSchema extends Model<InferAttributes<UserSchema>, InferCreationAttributes<UserSchema>>{
   declare id: CreationOptional<string>;
   declare name: CreationOptional<string>;
@@ -30,7 +31,8 @@ UserSchema.init({
   },  
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   password: {
     type: DataTypes.STRING,
