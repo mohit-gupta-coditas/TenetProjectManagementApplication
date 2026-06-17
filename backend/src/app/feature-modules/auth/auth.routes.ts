@@ -1,0 +1,38 @@
+import { customRouter } from "../../routes/custom.router.js";
+import { ResposneHandler } from "../../utils/response.handler.js";
+import { body } from "../../utils/validate.request.js";
+import { ZUser } from "../user/user.types.js";
+import authService from "./auth.service.js";
+import { ZLogin } from "./auth.types.js";
+
+const router = customRouter();
+
+router.post(
+  '/sendotp',
+  {isPublic: true},
+  body(ZUser.pick({email: true})),
+  async (req, res, next) => {
+    try {
+      const result = await authService.sendOTP(req.body.email);
+      res.send(new ResposneHandler(result));
+    } catch(err) {
+      next(err);
+    }
+  }
+);
+
+router.post(
+  '/verifyOTP',
+  {isPublic: true},
+  body(ZLogin),
+  async (req, res, next) => {
+    try {
+      const result = await authService.verifyOTP(req.body.otp, req.body.email);
+      res.send(new ResposneHandler(result));
+    } catch(err) {
+      next(err);
+    }
+  }
+)
+
+export default router.setRouter('/auth');

@@ -1,0 +1,26 @@
+import userRepo from "./user.repo.js";
+import { USER_RESPONSE } from "./user.response.js";
+import type { User } from "./user.types.js";
+
+const getUser = async (user: Partial<User>) => {
+  try {
+    const oldUser = await userRepo.getUser(user);
+    if(!oldUser) throw USER_RESPONSE.USER_NOT_FOUND;
+    return oldUser;
+  } catch(err) {
+    throw err;
+  }
+}
+
+const createUser = async (user: Pick<User, 'email'|'globalRole'|'createdBy'>) => {
+  try {
+    const oldUser = await userRepo.getUser({email: user.email});
+  } catch(err) {
+    throw USER_RESPONSE.USER_NOT_CREATED;
+  }
+}
+
+export default {
+  getUser,
+  createUser
+}

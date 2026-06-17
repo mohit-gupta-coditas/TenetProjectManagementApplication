@@ -1,0 +1,9 @@
+{
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.1070.0",
+		"multer-s3": "^3.0.1"
+	},
+	"devDependencies": {
+		"@types/multer-s3": "^3.0.3"
+	}
+}

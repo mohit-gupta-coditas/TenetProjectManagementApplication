@@ -1,7 +1,7 @@
 import { client } from "../connections/redis.connection.js";
 
 export type OtpData = {
-  otp: number,
+  otp: string,
   retries: number,
   createTime: number
 }
