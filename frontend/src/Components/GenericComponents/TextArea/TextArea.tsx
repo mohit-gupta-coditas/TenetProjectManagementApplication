@@ -1,7 +1,7 @@
 import type { TextAreaProps } from "./TextArea.types";
 import styles from './TextArea.module.scss'
 
-const TextArea=({label,id,...props}:TextAreaProps)=>{
+const TextArea=({label,...props}:TextAreaProps)=>{
   return( 
     <div className={styles.shiftgroup}>
       <textarea className={styles.shiftinput} {...props} ></textarea>
