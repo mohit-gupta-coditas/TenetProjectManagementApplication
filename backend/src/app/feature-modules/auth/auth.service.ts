@@ -12,9 +12,7 @@ import type { GLOBAL_ROLE } from "../../app.data.js";
 
 const sendOTP = async (email: string) => {
   try {
-    const user = await userService.getUser({email});
-
-    if(user.statusCode !== 200) return AUTH_RESPONSE.OTP_SENT;
+    await userService.getUser({email});
 
     const randomOTP = Math.round(Math.random()*(9999-1000)) + 1000;
 
@@ -80,9 +78,9 @@ const verifyOTP = async (otp: number, email: string) => {
 
     const accessToken = signToken(
       {
-        userId: currentUser.user.id,
-        companyId: currentUser.user.companyId,
-        globalRole: currentUser.user.globalRole as GLOBAL_ROLE
+        userId: currentUser.id,
+        companyId: currentUser.companyId,
+        globalRole: currentUser.globalRole as GLOBAL_ROLE
       },
       privateKey,
       env.ACCESS_TOKEN_TIME
@@ -90,9 +88,9 @@ const verifyOTP = async (otp: number, email: string) => {
 
     const refreshToken = signToken(
       {
-        userId: currentUser.user.id,
-        companyId: currentUser.user.companyId,
-        globalRole: currentUser.user.globalRole as GLOBAL_ROLE
+        userId: currentUser.id,
+        companyId: currentUser.companyId,
+        globalRole: currentUser.globalRole as GLOBAL_ROLE
       },
       privateKey,
       env.REFRESH_TOKEN_TIME
@@ -102,7 +100,7 @@ const verifyOTP = async (otp: number, email: string) => {
       ...AUTH_RESPONSE.LOGIN_SUCCESSFULL, 
       accessToken, 
       refreshToken,
-      globalRole: currentUser.user.globalRole
+      globalRole: currentUser.globalRole
     };
 
   } catch(err) {
