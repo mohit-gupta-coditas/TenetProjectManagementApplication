@@ -21,4 +21,20 @@
     cursor: not-allowed; 
   }
 }
+.PrimaryButton {
+    @extend .button;
+    --color: rgb(40, 91, 186);
+    --background-color: white;
+}
 
+.SecondaryButton {
+    @extend .button;
+    --color: red;
+    --background-color: white;
+}
+
+.TertiaryButton {
+    @extend .button;
+    --color: green;
+    --background-color: white;
+}
