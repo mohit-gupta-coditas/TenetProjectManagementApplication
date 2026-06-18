@@ -4,7 +4,7 @@ import styles from './Input.module.scss'
 const Input=({label,...props}:InputProps)=>{
   return(
     <div className={styles.shiftgroup}>
-      <input id={label} className={styles.shiftinput} {...props} ></input>
+      <input id={label} className={styles.shiftinput} {...props} />
       <label htmlFor={label} className={styles.shiftlabel}>{label}</label>
     </div>
   );
