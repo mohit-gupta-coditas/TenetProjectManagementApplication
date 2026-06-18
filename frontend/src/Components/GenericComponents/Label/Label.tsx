@@ -1,8 +1,8 @@
 import type { LabelProps } from "./Label.types";
 
-const Label=({children,...props}:LabelProps)=>{
+const Label=({className,children,...props}:LabelProps)=>{
   return(
-    <label {...props}>{children}</label>
+    <label {...props} className={className}>{children}</label>
   );
 }
 
