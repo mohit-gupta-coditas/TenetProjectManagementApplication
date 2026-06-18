@@ -1,4 +1,3 @@
-import { s3Client } from "../../connections/aws.connection.js";
 import companyRepo from "./company.repo.js";
 import { COMPANY_RESPONSE } from "./company.response.js";
 import type { Company } from "./company.types.js";

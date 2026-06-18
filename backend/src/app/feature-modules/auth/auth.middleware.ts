@@ -5,21 +5,20 @@ import { publicKey } from "../../utils/jwt.keys.js";
 
 export const authMiddleware = async(req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.accessToken ?? req.headers.authorization?.split(' ')[1];
+    const token = req.header('Authorization')?.split(' ')[1]?.toString();
     if(!token) throw AUTH_RESPONSE.TOKEN_NOT_FOUND;
 
     const decoded = verifyToken(token, publicKey);
 
-    if(typeof decoded !== 'string') {
-      req.payload = {
-        userId: decoded.userId,
-        companyId: decoded.companyId,
-        globalRole: decoded.globalRole
-      }
+    req.payload = {
+      userId: decoded.userId,
+      companyId: decoded.companyId,
+      globalRole: decoded.globalRole
     }
-
+    
     next();
   } catch(err) {
+    console.log(err);
     next(err);  
   }
 }

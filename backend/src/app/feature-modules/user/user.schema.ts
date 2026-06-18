@@ -9,12 +9,12 @@ export class UserSchema extends Model<InferAttributes<UserSchema>, InferCreation
   declare email: string;
   declare password: CreationOptional<string>;
   declare companyId: CreationOptional<string>;
-  declare passwordVersion: CreationOptional<string>;
+  declare passwordVersion: CreationOptional<number>;
   declare globalRole: string;
-  declare isDeleted: CreationOptional<boolean>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
-  declare createdBy: CreationOptional<string>;
+  declare isDeleted: CreationOptional<boolean | undefined>;
+  declare createdAt: CreationOptional<Date | undefined>;
+  declare updatedAt: CreationOptional<Date | undefined>;
+  declare createdBy: CreationOptional<string | undefined>;
 }
 
 UserSchema.init({

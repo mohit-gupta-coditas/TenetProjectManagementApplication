@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import type { Payload } from "../app.types.js";
 
 export const signToken = (payload: Payload, secret_key: string, time: number) => {
@@ -19,5 +19,5 @@ export const verifyToken = (token: string, secret_key: string) => {
     {
       algorithms: ['RS256']
     }
-  )
+  ) as JwtPayload
 }

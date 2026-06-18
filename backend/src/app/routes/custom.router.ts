@@ -5,7 +5,7 @@ import { Route } from "./routes.types.js";
 export const customRouter = () => {
   const router = Router();
 
-  const constructMethods = (type: 'get' | 'post' | 'put' | 'patch' | 'delete') => (path: string, auth: {isPublic: true}, ...handlers : RequestHandler[]) => {
+  const constructMethods = (type: 'get' | 'post' | 'put' | 'patch' | 'delete') => (path: string, auth: {isPublic?: true}, ...handlers : RequestHandler[]) => {
     const middlewares = [];
     if(!auth.isPublic) middlewares.push(authMiddleware);
     middlewares.push(...handlers);

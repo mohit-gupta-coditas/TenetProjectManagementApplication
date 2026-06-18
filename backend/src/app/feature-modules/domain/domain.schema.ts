@@ -1,5 +1,6 @@
 import { DataTypes, Model, Sequelize, type CreationOptional, type InferAttributes, type InferCreationAttributes } from "sequelize";
 import { sequelize } from "../../connections/pg.connection.js";
+import { CompanySchema } from "../company/company.schema.js";
 
 export class DomainSchema extends Model<
   InferAttributes<DomainSchema>, 
@@ -28,6 +29,12 @@ DomainSchema.init({
   companyId: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: CompanySchema,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'NO ACTION'
   },
   createdAt: {
     type: DataTypes.DATE,
