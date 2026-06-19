@@ -1,4 +1,4 @@
-import { Op, type WhereOptions } from "sequelize";
+import { Op, Transaction, type WhereOptions } from "sequelize";
 import domainRepo from "./domain.repo.js";
 import { DOMAIN_RESPONSE } from "./domain.response.js";
 import type { Domain, DomainOptions } from "./domain.types.js";
@@ -13,11 +13,9 @@ const getDomain = async (domain: Partial<Domain>) => {
   }
 }
 
-const createDomain = async (domain: Pick<Domain, "name" | "companyId" | "createdBy">) => {
+const createDomain = async (domain: Pick<Domain, "name" | "companyId" | "createdBy">, transaction?: Transaction) => {
   try {
-    const oldDomain = await domainRepo.getDomain({name: domain.name});
-    if(oldDomain) throw DOMAIN_RESPONSE.DOMAIN_ALREADY_EXISTS;
-    await domainRepo.createDomain(domain);
+    await domainRepo.createDomain(domain, transaction);
     return DOMAIN_RESPONSE.DOMAIN_CREATED;
   } catch(err) {
     throw err;

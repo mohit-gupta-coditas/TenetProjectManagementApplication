@@ -9,7 +9,8 @@ export const USER_RESPONSE : Record<
 "USER_UPDATED" |
 "USER_NOT_UPDATED" |
 "USER_DELETED" |
-"USER_NOT_DELETED"
+"USER_NOT_DELETED" |
+"YOU_DONT_EXIST"
 , ResponseFormat> = {
   USER_NOT_FOUND: new ResponseFormat(404, 'USER NOT FOUND'),
   USER_ALREADY_EXISTS : new ResponseFormat(400, 'USER ALREADY EXISTS'),
@@ -19,5 +20,6 @@ export const USER_RESPONSE : Record<
   USER_UPDATED: new ResponseFormat(200, 'USER UPDATED'),
   USER_NOT_UPDATED: new ResponseFormat(400, 'USER NOT UPDATED'),
   USER_DELETED: new ResponseFormat(200, 'USER DELETED'),
-  USER_NOT_DELETED: new ResponseFormat(400, 'USER NOT DELETED')
+  USER_NOT_DELETED: new ResponseFormat(400, 'USER NOT DELETED'),
+  YOU_DONT_EXIST: new ResponseFormat(400, 'YOU DONT EXIST')
 }

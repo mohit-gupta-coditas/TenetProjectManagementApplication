@@ -8,7 +8,7 @@ export const ZUser = z.object({
   companyId: z.uuid(`companyId must be a valid uuid`),
   passwordVersion: z.number(`passwordVersion must be a valid number`),
   globalRole: z.enum(['admin' , 'superAdmin' , 'member']),
-  isDeleted: z.z.string().transform( value => {
+  isDeleted: z.string().transform( value => {
       if(value === 'true') {
         return true;
       } else if(value === 'false') {
@@ -34,10 +34,16 @@ export const ZUserOptions = z.object({
         throw new Error(`isDeleted must be 'true' or 'false'`);
       }
     }).optional(),
-    limit: z.coerce.number(`limit must be a valid number`),
-    offset: z.coerce.number(`offset must be a valid number`),
-    sortBy: z.string().default("email"),
-    orderBy: z.enum(["ASC", "DESC"]).default("ASC")
+  globalRole: z.enum(['admin','member']).optional(),
+  limit: z.coerce.number(`limit must be a valid number`),
+  offset: z.coerce.number(`offset must be a valid number`),
+  sortBy: z.string().default("email"),
+  orderBy: z.enum(["ASC", "DESC"]).default("ASC")
+});
+
+export const ZUserUpdate = z.object({
+  name: z.string(`'name' must be a valid string`).trim().min(1).optional(),
+  email: z.email(`'email' must be a valid format`).optional()
 });
 
 export type User = z.infer<typeof ZUser>;

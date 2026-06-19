@@ -10,11 +10,16 @@ export class UserSchema extends Model<InferAttributes<UserSchema>, InferCreation
   declare password: CreationOptional<string>;
   declare companyId: CreationOptional<string>;
   declare passwordVersion: CreationOptional<number>;
-  declare globalRole: string;
+  declare globalRole: "admin" | "superAdmin" | "member";
   declare isDeleted: CreationOptional<boolean | undefined>;
   declare createdAt: CreationOptional<Date | undefined>;
   declare updatedAt: CreationOptional<Date | undefined>;
   declare createdBy: CreationOptional<string | undefined>;
+
+  toSafeJSON() {
+    const {password, passwordVersion, createdAt, updatedAt, createdBy, ...rest} = this.toJSON();
+    return rest;
+  }
 }
 
 UserSchema.init({
@@ -27,7 +32,7 @@ UserSchema.init({
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: null
+    defaultValue: 'user'
   },  
   email: {
     type: DataTypes.STRING,

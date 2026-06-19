@@ -16,7 +16,7 @@ export default {
           type: DataTypes.UUID,
           primaryKey: true,
           allowNull: false,
-          defaultValue: Sequelize.Sequelize.fn('uuidv4')
+          defaultValue: Sequelize.Sequelize.fn('uuidv4')  
         },
         name: {
           type: DataTypes.STRING,

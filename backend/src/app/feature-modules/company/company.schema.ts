@@ -8,12 +8,22 @@ export class CompanySchema extends Model<InferAttributes<CompanySchema>, InferCr
   declare email: string;
   declare logoUrl: string;
   declare subscription: string;
-  declare isDeleted: CreationOptional<boolean>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare isDeleted: CreationOptional<boolean | undefined>;
+  declare createdAt: CreationOptional<Date | undefined>;
+  declare updatedAt: CreationOptional<Date | undefined>;
+
+  toSafeJSON() {
+    const {createdAt, updatedAt, ...rest} = this.toJSON();
+    return rest;
+  }
 }
 
 CompanySchema.init({
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: Sequelize.fn('uuidv4')
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -39,12 +49,6 @@ CompanySchema.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
-  },
-  id: {
-    type: DataTypes.UUID,
-    primaryKey: true,
-    allowNull: false,
-    defaultValue: Sequelize.fn('uuidv4')
   },
   createdAt: {
     type: DataTypes.DATE,

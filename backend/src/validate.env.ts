@@ -17,7 +17,9 @@ const envSchema = z.object({
   OTP_TIMER: z.coerce.number('OTP_TIMER must be a number'),
   ACCESS_TOKEN_TIME: z.coerce.number('ACCESS_TOKEN_TIME must be a number'),
   REFRESH_TOKEN_TIME: z.coerce.number('REFRESH_TOKEN_TIME must be a number'),
-  AWS_S3_BUCKET_NAME: z.string('Name must be a valid string')
+  AWS_S3_BUCKET_NAME: z.string('Name must be a valid string'),
+  PASSWORD_TOKEN_TIME: z.coerce.number('PASSWORD_TOKEN_TIME must be a valid number'),
+  SET_PASSWORD_LINK: z.string(`'SET_PASSWORD_LINK' must be a valid string`).min(1)
 });
 
 export const env = envSchema.parse(process.env);

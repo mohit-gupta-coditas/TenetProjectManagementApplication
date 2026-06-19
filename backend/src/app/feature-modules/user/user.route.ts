@@ -2,10 +2,9 @@ import { customRouter } from "../../routes/custom.router.js";
 import { ResposneHandler } from "../../utils/response.handler.js";
 import { body, params, query } from "../../utils/validate.request.js";
 import userService from "./user.service.js";
-import { ZUser, ZUserOptions } from "./user.types.js";
+import { ZUser, ZUserOptions, ZUserUpdate } from "./user.types.js";
 
 const router = customRouter();
-
 
 router.get(
   '/:id',
@@ -14,7 +13,7 @@ router.get(
   async (req, res, next) => {
     try {
       const result = await userService.getUser({id: req.params.id as string});
-      res.send(new ResposneHandler(result));
+      res.send(new ResposneHandler(result.toSafeJSON()));
     } catch(err) {
       next(err);
     }
@@ -29,7 +28,7 @@ router.get(
   async (req, res, next) => {
     try {
       const result = await userService.getAllUser(req.options, req.body.companyId);
-      res.send(new ResposneHandler(result));
+      res.send(new ResposneHandler(result.map(user => user.toSafeJSON())));
     } catch(err) {
       next(err);
     }
@@ -41,16 +40,13 @@ router.post(
   {},
   body(ZUser.pick({
     email: true,
-    globalRole: true,
     companyId: true
   })),
   async (req, res, next) => {
     try {
-      console.log('here');
       const result = await userService.createUser({...req.body, createdBy: req.payload.userId });
       res.send(new ResposneHandler(result));
     } catch(err) {
-      console.log(err);
       next(err);
     }
   }
@@ -59,9 +55,7 @@ router.post(
 router.patch(
   '/:id',
   {},
-  body(ZUser.pick({
-    name: true,
-  })),
+  body(ZUserUpdate),
   async (req, res, next)=> {
     try {
       const result = await userService.updateUser(req.body, req.params.id as string);

@@ -1,7 +1,8 @@
-import { Op, type WhereOptions } from "sequelize";
+import { Op, Transaction, type WhereOptions } from "sequelize";
 import userRepo from "./user.repo.js";
 import { USER_RESPONSE } from "./user.response.js";
 import type { User, UserOptions } from "./user.types.js";
+import { CREATION_ROLE, GLOBAL_ROLE } from "../../app.data.js";
 
 const getUser = async (user: Partial<User>) => {
   try {
@@ -13,14 +14,24 @@ const getUser = async (user: Partial<User>) => {
   }
 }
 
-const createUser = async (user: Pick<User, 'email'|'globalRole'|'createdBy'|'companyId'>) => {
+const createUser = async (user: Pick<User, 'email'|'createdBy'|'companyId'>, transaction?: Transaction) => {
   try {
     const oldUser = await userRepo.getUser({email: user.email});
     if(oldUser) throw USER_RESPONSE.USER_ALREADY_EXISTS;
 
-    await userRepo.createUser(user);
+    console.log('here');
+    console.log(user.createdBy);
+    const creatingUser = await userRepo.getUser({id: user.createdBy!});
+    if(!creatingUser) throw USER_RESPONSE.YOU_DONT_EXIST;
+
+    console.log('here2  ');
+    
+    const globalRole = CREATION_ROLE[creatingUser.globalRole];
+
+    await userRepo.createUser({...user, globalRole}, transaction);
     return USER_RESPONSE.USER_CREATED;
   } catch(err) {
+    console.log(err);
     throw USER_RESPONSE.USER_NOT_CREATED;
   }
 }
@@ -38,8 +49,18 @@ const getAllUser = async (options: UserOptions, companyId: string) => {
 
     if(options.search) {
       where[Op.or as any] = {
-        name: options.search,
-        email: options.search
+        name: {
+          [Op.like]: `%${options.search}%`
+        },
+        email: {
+          [Op.like]: `%${options.search}%`
+        }
+      }
+    }
+
+    if(options.globalRole) {
+      where.globalRole = {
+        [Op.eq]: options.globalRole
       }
     }
     
@@ -78,9 +99,9 @@ const deleteUser = async (id: string) => {
     if(!oldUser) throw USER_RESPONSE.USER_NOT_FOUND;
 
     const isUpdated = await userRepo.updateUser({isDeleted: true}, id);
-    if(!isUpdated) throw USER_RESPONSE.USER_NOT_UPDATED;
+    if(!isUpdated) throw USER_RESPONSE.USER_NOT_DELETED;
 
-    return USER_RESPONSE.USER_UPDATED;
+    return USER_RESPONSE.USER_DELETED;
   } catch(err) {
     throw err;
   }

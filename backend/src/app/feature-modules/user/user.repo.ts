@@ -1,8 +1,8 @@
-import type { WhereOptions } from "sequelize";
+import type { Transaction, WhereOptions } from "sequelize";
 import { UserSchema } from "../../connections/associations.js";
 import type { User } from "./user.types.js";
 
-const createUser = (user: Pick<User, 'email'|'globalRole'|'createdBy'>) => UserSchema.create(user);
+const createUser = (user: Pick<User, 'email'|'globalRole'|'createdBy'>, transaction?: Transaction) => UserSchema.create(user, {transaction: transaction ?? null});
 
 const getUser = (user: Partial<User>) => UserSchema.findOne({where: user});
 

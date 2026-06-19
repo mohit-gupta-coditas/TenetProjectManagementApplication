@@ -2,13 +2,47 @@ import { compare } from "bcryptjs";
 import { env } from "../../../validate.env.js";
 import { client } from "../../connections/redis.connection.js";
 import { sendToSQS } from "../../utils/aws.helper.js";
-import { hashOTP } from "../../utils/hash.password.js";
+import { hashOTP, hashPassword } from "../../utils/hash.password.js";
 import { signToken } from "../../utils/jwt.helper.js";
 import { privateKey } from "../../utils/jwt.keys.js";
 import { setOTP } from "../../utils/otp.helper.js";
 import userService from "../user/user.service.js";
 import { AUTH_RESPONSE } from "./auth.response.js"; 
 import type { GLOBAL_ROLE } from "../../app.data.js";
+
+const setPassword = async (password: string, userId: string) => {
+  try {
+    const user = await userService.getUser({id: userId});
+    user.password = await hashPassword(password);
+    user.passwordVersion += 1;
+    user.save();
+
+    return AUTH_RESPONSE.PASSWORD_SET;
+  } catch(err) {
+    throw AUTH_RESPONSE.CANNOT_SET_PASSWORD;
+  }
+}
+
+const makePassword = async (email: string) => {
+  try {
+    const user = await userService.getUser({email});
+    
+    const token = signToken(
+      {
+        userId: user.id,
+        companyId: user.companyId,
+        globalRole: user.globalRole,
+        passwordVersion: user.passwordVersion
+      },
+      privateKey,
+      env.PASSWORD_TOKEN_TIME
+    );
+
+    return {token};
+  } catch(err) {
+    throw err;
+  }
+}
 
 const sendOTP = async (email: string) => {
   try {
@@ -100,7 +134,8 @@ const verifyOTP = async (otp: number, email: string) => {
       ...AUTH_RESPONSE.LOGIN_SUCCESSFULL, 
       accessToken, 
       refreshToken,
-      globalRole: currentUser.globalRole
+      globalRole: currentUser.globalRole,
+      email: currentUser.email
     };
 
   } catch(err) {
@@ -111,5 +146,7 @@ const verifyOTP = async (otp: number, email: string) => {
 
 export default {
   sendOTP,
-  verifyOTP
+  verifyOTP,
+  setPassword,
+  makePassword
 }

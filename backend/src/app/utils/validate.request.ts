@@ -4,9 +4,7 @@ import type { ZodObject } from "zod";
 const check = (type: 'body' | 'query' | 'params') => (schema: ZodObject) => (req: Request, res: Response, next: NextFunction) => {
   try {
     if(type === 'query') {
-      console.log(req.query.isDeleted);
       req.options = schema.parse(req.query);
-      console.log(req.options.isDeleted);
     } else {
       req[type] = schema.parse(req[type]);
     }

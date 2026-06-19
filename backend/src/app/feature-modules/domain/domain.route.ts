@@ -45,11 +45,9 @@ router.post(
   })),
   async (req, res, next) => {
     try {
-      console.log('here');
       const result = await domainService.createDomain({...req.body, createdBy: req.payload.userId });
       res.send(new ResposneHandler(result));
     } catch(err) {
-      console.log(err);
       next(err);
     }
   }
