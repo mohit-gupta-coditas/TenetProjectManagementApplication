@@ -1,0 +1,16 @@
+@use '../../../Styles/mixin' as *;
+
+.form{
+  @include formCommon
+}
+
+.btnDiv{
+  @include flex-center;
+}
+
+.ErrorMessage{
+  @include ErrorMessage;
+}
+.SuccessMessage{
+  @include SuccessMessage;
+}

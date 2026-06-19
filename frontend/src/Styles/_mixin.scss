@@ -1,4 +1,4 @@
-@use "../Styles/variables" as *;
+@use "../styles/variables" as *;
 
 @mixin flex-center{
   display: flex;
@@ -9,6 +9,7 @@
   display: grid;
   place-items: center;
 }
+
 
 @mixin formCommon{
   display: flex;
@@ -41,4 +42,20 @@
 @mixin PlaceholderFocus{
   opacity: 0;
   transition: opacity 0.2s ease;
+}
+
+@mixin ErrorMessage{
+  text-align: center;
+  background-color:  white;
+  color: rgb(245, 79, 79);;
+  border: none;
+  border-radius: 4px;
+}
+
+@mixin SuccessMessage{
+  background-color: rgb(79, 245, 98);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
 }
