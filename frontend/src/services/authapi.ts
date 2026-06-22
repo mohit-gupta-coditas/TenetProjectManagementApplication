@@ -1,9 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from "./baseapi";
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://fjs484xv-3000.inc1.devtunnels.ms/' }),
-  endpoints: (builder) => ({
+export const authapi=baseApi.injectEndpoints({
+  endpoints:(builder)=>({
 
     sendOtp: builder.mutation<{data:any,error:any}, { email: string }>({
       query: (body) => ({
@@ -21,23 +19,21 @@ export const authApi = createApi({
       }),
     }),
 
-
     setPassword: builder.mutation<{ success: boolean }, { email: string; token: string; password: string }>({
       query: (body) => ({
-        url: '/set-password',
+        url: 'set-password',
         method: 'POST',
         body,
       }),
     }),
 
-  }),
-});
+    getUser: builder.query<{data:any,error:any},void>({
+      query:()=>({
+        url:"auth/tokenDetails",
+        method: 'GET',
+      })
+    })
+  })
+})
 
-export const { 
-  useSendOtpMutation, 
-  useVerifyOtpMutation, 
-  useSetPasswordMutation 
-} = authApi;
-
-
-
+export const { useGetUserQuery,useSendOtpMutation, useSetPasswordMutation, useVerifyOtpMutation}=authapi

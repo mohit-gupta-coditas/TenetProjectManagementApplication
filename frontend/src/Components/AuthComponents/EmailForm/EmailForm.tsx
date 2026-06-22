@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Input from "../../GenericComponents/Input/Input";
 import Button from "../../GenericComponents/Button/Button";
 import type { EmailFormProps } from "./EmailForm.types";
+import Message from "../../Message/Message";
 
 
 const EmailForm=({onSubmit,isLoading}:EmailFormProps)=>{
@@ -16,7 +17,7 @@ const EmailForm=({onSubmit,isLoading}:EmailFormProps)=>{
                     message: "Invalid email address format"
                   }
                 })}></Input>
-      {errors.email && <p className={styles.ErrorMessage}>{errors.email.message}</p>}
+      {errors.email && <Message type="error" message={errors.email.message}/>}
       <div className={styles.btnDiv}>
         <Button type="submit" disabled={isLoading}> 
                   {isLoading ? "LOADING..." : "SEND OTP"}

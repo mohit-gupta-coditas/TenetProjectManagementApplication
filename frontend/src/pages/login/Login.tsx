@@ -4,7 +4,7 @@ import LoginForm from "../../Components/AuthComponents/LoginForm/LoginForm";
 const Login=()=>{
   return(
     <AuthLayout>
-      <LoginForm></LoginForm>
+      <LoginForm/>
     </AuthLayout>
   );
 }

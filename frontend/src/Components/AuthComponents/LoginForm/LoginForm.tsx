@@ -1,36 +1,33 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import styles from './LoginForm.module.scss';
-import useAuth from "../../../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { initialState, loginReducer } from "../../../reducer/loginReducer";
-import { useSendOtpMutation, useVerifyOtpMutation } from "../../../services/authapi";
+import { useGetUserQuery, useSendOtpMutation, useVerifyOtpMutation } from "../../../services/authapi";
 import Button from "../../GenericComponents/Button/Button";
 import EmailForm from "../EmailForm/EmailForm";
 import VerifyOTPForm from "../VerifyOTPForm/VerifyOTPForm";
+import Message from "../../Message/Message";
 
 const LoginForm = () => {
   const [state, dispatch] = useReducer(loginReducer, initialState);
-  const { login } = useAuth()
   const navigate=useNavigate()
-
-  const [secondsLeft, setSecondsLeft] = useState(30);
 
   const [sendOTP, sendOTPState] = useSendOtpMutation();
   const [verifyOTP, sendVerifyOTP] = useVerifyOtpMutation()
 
   useEffect(() => {
-    if (state.step !== 'OTP' || secondsLeft <= 0) return;
+    if (state.step !== 'OTP' || state.secondsLeft <= 0) return;
     const timer = setInterval(() => {
-      setSecondsLeft((prev) => prev - 1);
+      dispatch({type:"TIMER_CHANGE",seconds:state.secondsLeft-1})
     }, 1000);
     return () => clearInterval(timer);
-  }, [state.step, secondsLeft]);
+  }, [state.step, state.secondsLeft]);
 
   const handleEmailSubmit = async (data: { email: string }) => {
     dispatch({ type: 'START_SENDING_OTP' });
     try {
       await sendOTP({ email: data.email }) 
-      setSecondsLeft(30);
+      dispatch({type:"TIMER_CHANGE",seconds:30})
       dispatch({ type: 'SET_OTP_STEP', payload: data.email });
     }
     catch(error) {
@@ -41,7 +38,7 @@ const LoginForm = () => {
     dispatch({ type: 'START_SENDING_OTP' });
     try {
       await sendOTP({ email: state.email })
-      setSecondsLeft(30);
+      dispatch({type:"TIMER_CHANGE",seconds:30})
       dispatch({ type: 'SET_OTP_STEP', payload: state.email });
     }
     catch (error) {
@@ -53,11 +50,14 @@ const LoginForm = () => {
     try {
       const response = await verifyOTP({ email: state.email, otp: data.otp })
       const dataObj=response.data
+      console.log(dataObj)
       if(!dataObj) {
         return dispatch({ type: "LOGIN_STATUS", status: false }) 
       } 
-      login(dataObj.data)
-      navigate(`/${dataObj.data.globalRole}`)
+      const token = dataObj.data.accessToken
+      console.log(token)
+      localStorage.setItem("token",token)
+      
     }
     catch(error) {
       console.error(error)
@@ -75,18 +75,18 @@ const LoginForm = () => {
     <VerifyOTPForm onLogin={handleLoginSubmit} isLoading={state.isLoading}>
       <div className={styles.extras}>
         {sendVerifyOTP.isError ? (
-          <p className={styles.ErrorMessage}>OTP is invalid/wrong</p>
+          <Message type="error" message="OTP is invalid/wrong"/>
         ) : (
-          sendOTPState.isSuccess && <p className={styles.SuccessMessage}>OTP sent successfully</p>
+          sendOTPState.isSuccess && <Message type="success" message="OTP sent successfully"/>
         )}
       </div>
       <p className={styles.current}>
         If an account exists for <strong> {state.email} </strong>, an OTP has been sent.
       </p>
       <div className={styles.actionLinks}>
-        {secondsLeft > 0 ? (
+        {state.secondsLeft > 0 ? (
           <Button type="button" disabled>
-            Resend OTP in {secondsLeft}s
+            Resend OTP in {state.secondsLeft}s
           </Button>
         ) : (
           <Button

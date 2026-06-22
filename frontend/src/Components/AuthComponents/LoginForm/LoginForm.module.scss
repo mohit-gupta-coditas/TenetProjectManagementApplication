@@ -12,11 +12,3 @@
 .current{
   text-align:center;
 }
-
-.SuccessMessage{
-  @include SuccessMessage;
-}
-
-.ErrorMessage{
-   @include ErrorMessage;
-}

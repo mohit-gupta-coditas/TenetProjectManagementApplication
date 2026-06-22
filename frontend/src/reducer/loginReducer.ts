@@ -4,6 +4,7 @@ export interface LoginState {
   step: LoginStep;
   email: string;
   isLoading: boolean;
+  secondsLeft:number;
 }
 
 export type LoginAction =
@@ -11,11 +12,13 @@ export type LoginAction =
   | { type: 'SET_OTP_STEP'; payload: string }
   | { type: 'GO_BACK_TO_EMAIL' }
   | {type: "LOGIN_STATUS"; status:boolean}
+  | {type: "TIMER_CHANGE",seconds:number}
   
 export const initialState: LoginState = {
   step: 'EMAIL',
   email: '',
   isLoading: false,
+  secondsLeft:30
 };
 
 export function loginReducer(state: LoginState, action: LoginAction): LoginState {
@@ -42,6 +45,11 @@ export function loginReducer(state: LoginState, action: LoginAction): LoginState
       return {
         ...state,
         isLoading:action.status
+      }
+    case "TIMER_CHANGE":
+      return {
+        ...state,
+        secondsLeft:action.seconds
       }
     default:
       return state;
