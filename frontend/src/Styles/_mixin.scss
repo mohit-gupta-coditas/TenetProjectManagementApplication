@@ -1,4 +1,4 @@
-@use "../Styles/variables" as *;
+@use "../styles/variables" as *;
 
 @mixin flex-center{
   display: flex;
@@ -9,6 +9,7 @@
   display: grid;
   place-items: center;
 }
+
 
 @mixin formCommon{
   display: flex;
@@ -42,3 +43,4 @@
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
