@@ -1,0 +1,66 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixin' as *;
+@use '../../../Styles/fonts' as *;
+
+.container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: $inHold-color;
+  @include flex-center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.colorContainer {
+  width: 100%;
+  height: calc(100vh - 4rem);
+  background-color: rgb(255, 255, 255);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url("../../../assets/login_bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  
+  border-radius: 24px;
+  @include flex-center;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.368);
+}
+
+.formModal {
+  background-color: #ffffff; 
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;  
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.368);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem; 
+  
+  img {
+    height: 2.5rem;
+    object-fit: contain;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    color: $secondary-color;
+    @include oswald;
+    font-weight: 400;
+  }
+ 
+}
+.p{
+    letter-spacing: 0.5rem;
+    text-align: center;
+  }

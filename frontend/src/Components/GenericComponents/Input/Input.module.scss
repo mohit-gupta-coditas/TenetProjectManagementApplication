@@ -1,0 +1,27 @@
+@use '../../../Styles/mixin' as *;
+
+.shiftinput{
+  @include shiftinput
+}
+.shiftgroup {
+  @include shiftgroup
+}
+
+.shiftinput:placeholder-shown + .shiftlabel  {
+  opacity: 0;
+}
+.shiftinput + .shiftlabel {
+  @include ShiftInputAndLabel
+}
+
+.shiftinput:focus::placeholder {
+  @include PlaceholderFocus
+}
+.shiftinput:focus{
+  background-color: white;
+}
+
+.shiftinput:focus + .shiftlabel,
+.shiftinput:not(:placeholder-shown) + .shiftlabel {
+  opacity: 1;
+}

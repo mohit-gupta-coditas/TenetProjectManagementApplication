@@ -1,0 +1,10 @@
+@use '../../../Styles/mixin' as *;
+
+.form{
+  @include formCommon
+}
+
+.btnDiv{
+  @include flex-center;
+}
+
