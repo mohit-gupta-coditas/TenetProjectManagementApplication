@@ -56,8 +56,11 @@ export const uploadToS3 = multer({
   storage: multerS3({
     s3: s3Client,
     bucket: env.AWS_S3_BUCKET_NAME,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname});
+      cb(null, { 
+        fieldName: file.fieldname,
+      });
     },
     key: function(req, file, cb) {
       cb(null, new Date().toISOString() + '-' + file.originalname);
@@ -79,8 +82,7 @@ export const getPresignedURL = async (key: string) => {
   try {
     const command = new GetObjectCommand({
       Bucket: env.AWS_S3_BUCKET_NAME,
-      Key: '2026-06-19T05%3A09%3A05.964Z-example-image.png',
-
+      Key: key
     });
 
     return await getSignedUrl(s3Client, command, {expiresIn: 6000});

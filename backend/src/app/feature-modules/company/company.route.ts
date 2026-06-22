@@ -32,9 +32,10 @@ router.post(
   })),
   async (req, res, next) => {
     try {
+      console.log(req.file);
       const result = await companyService.createCompany(
         req.body, 
-        (req.file as any).location,
+        (req.file as any).key,
         req.payload.userId
       );
       res.send(new ResposneHandler(result));
