@@ -51,7 +51,7 @@ module.exports = {
     );
 
     await queryInterface.addConstraint(
-      'companies',
+      'roles',
       {
         type: 'foreign key',
         fields: ['companyId'],
@@ -66,7 +66,7 @@ module.exports = {
     );
 
     await queryInterface.addConstraint(
-      'companies',
+      'roles',
       {
         type: 'foreign key',
         fields: ['createdBy'],
