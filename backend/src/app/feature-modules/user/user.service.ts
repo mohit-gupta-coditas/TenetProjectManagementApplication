@@ -19,19 +19,13 @@ const createUser = async (user: Pick<User, 'email'|'createdBy'|'companyId'>, tra
     const oldUser = await userRepo.getUser({email: user.email});
     if(oldUser) throw USER_RESPONSE.USER_ALREADY_EXISTS;
 
-    console.log('here');
-    console.log(user.createdBy);
     const creatingUser = await userRepo.getUser({id: user.createdBy!});
     if(!creatingUser) throw USER_RESPONSE.YOU_DONT_EXIST;
-
-    console.log('here2  ');
     
     const globalRole = CREATION_ROLE[creatingUser.globalRole];
-
     await userRepo.createUser({...user, globalRole}, transaction);
     return USER_RESPONSE.USER_CREATED;
   } catch(err) {
-    console.log(err);
     throw USER_RESPONSE.USER_NOT_CREATED;
   }
 }

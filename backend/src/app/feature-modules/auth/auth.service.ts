@@ -44,6 +44,18 @@ const makePassword = async (email: string) => {
   }
 }
 
+const getTokenDetails = async (userId: string) => {
+  try{
+    const user = await userService.getUser({id: userId});
+    return {
+      globalRole: user.globalRole,
+      email: user.email
+    };
+  } catch(err) {
+    throw err;
+  }
+}
+
 const sendOTP = async (email: string) => {
   try {
     await userService.getUser({email});
@@ -134,8 +146,6 @@ const verifyOTP = async (otp: number, email: string) => {
       ...AUTH_RESPONSE.LOGIN_SUCCESSFULL, 
       accessToken, 
       refreshToken,
-      globalRole: currentUser.globalRole,
-      email: currentUser.email
     };
 
   } catch(err) {
@@ -148,5 +158,6 @@ export default {
   sendOTP,
   verifyOTP,
   setPassword,
-  makePassword
+  makePassword,
+  getTokenDetails
 }

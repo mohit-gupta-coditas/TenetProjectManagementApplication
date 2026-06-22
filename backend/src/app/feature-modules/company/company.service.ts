@@ -5,7 +5,7 @@ import type { Company, CompanyOptions } from "./company.types.js";
 import { sequelize } from "../../connections/pg.connection.js";
 import domainService from "../domain/domain.service.js";
 import { Op, type WhereOptions } from "sequelize";
-import { sendToSQS } from "../../utils/aws.helper.js";
+import { getPresignedURL, sendToSQS } from "../../utils/aws.helper.js";
 import { env } from "../../../validate.env.js";
 import { signToken } from "../../utils/jwt.helper.js";
 import { privateKey } from "../../utils/jwt.keys.js";
@@ -14,6 +14,8 @@ const getCompany = async (company: Partial<Company>) => {
   try {
     const oldCompany = await companyRepo.getCompany(company);
     if(!oldCompany) throw COMPANY_RESPONSE.COMPANY_NOT_FOUND;
+
+    oldCompany.logoUrl = await getPresignedURL(oldCompany.logoUrl);
 
     return oldCompany;
   } catch(err) {
@@ -53,13 +55,14 @@ const createCompany = async (company: Pick<Company, "name" | "email" | "subscrip
       sender_email: env.SES_SENDER_EMAIL,
       to_email: company.email,  
       subject: 'TENET INVITATION',
-      message: `Welcome to TENET
-      You have been invited as ADMIN
-      please click on this link to set password
+      message: `Welcome to TENET\n
+      You have been invited as ADMIN\n
+      please click on this link to set password\n
       ${env.SET_PASSWORD_LINK}/${token}
       `
     });
-    
+
+
     return COMPANY_RESPONSE.COMPANY_CREATED;
   } catch(err) {
     console.log(err);

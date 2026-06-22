@@ -38,6 +38,19 @@ router.post(
 )
 
 router.post(
+  '/tokenDetails',
+  {},
+  async (req, res, next) => {
+    try {
+      const result = await authService.getTokenDetails(req.payload.userId);
+      res.send(new ResposneHandler(result));
+    } catch(err) {
+      next(err);
+    }
+  }
+)
+
+router.post(
   '/setPassword',
   {isPublic : true},
   passwordAuth,

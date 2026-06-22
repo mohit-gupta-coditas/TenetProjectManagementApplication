@@ -4,6 +4,8 @@ import { s3Client, sesClient, sqsClient } from "../connections/aws.connection.js
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import multer from "multer";
 import multerS3 from "multer-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
 
 export const sendToSQS = async (messageBody: any) => {
   try {
@@ -12,7 +14,9 @@ export const sendToSQS = async (messageBody: any) => {
       MessageBody: JSON.stringify(messageBody)
     });
 
-    await sqsClient.send(command);
+    const result = await sqsClient.send(command);
+
+    return result;
     
   } catch(err) {
     throw err;
@@ -70,3 +74,17 @@ export const uploadToS3 = multer({
     fileSize: 1024*1024*5
   }
 });
+
+export const getPresignedURL = async (key: string) => {
+  try {
+    const command = new GetObjectCommand({
+      Bucket: env.AWS_S3_BUCKET_NAME,
+      Key: '2026-06-19T05%3A09%3A05.964Z-example-image.png',
+
+    });
+
+    return await getSignedUrl(s3Client, command, {expiresIn: 6000});
+  } catch(err) {
+    throw err;
+  }
+}
