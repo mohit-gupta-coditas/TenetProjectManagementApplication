@@ -1,0 +1,46 @@
+@use "../../styles/variables" as *;
+
+.dashboard{
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background-color: aliceblue;
+}
+
+.navbar{
+  display: flex;
+  padding: 1rem;
+  background-color: white;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.utilityBtns{
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainPage{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  justify-content: space-evenly;
+  h3{
+    text-align: center;
+    background-color: rgb(181, 180, 180);
+    color: white;
+  }
+}
+
+.img{
+}
+
+.subs{
+ display: flex;
+ border: thin solid;
+ justify-content: center;
+ padding: 2rem;
+ background-color: $secondary-color;
+ color: white;
+}

@@ -1,19 +1,18 @@
 @use '../../../Styles/variables' as *;
 
 .button{
-  background-color: var(--background-color,$textPrimary-color);
-  color: var(--color,$enabled-btn);
+  background-color: var(--background-color,$active-color);
+  color: var(--color,$inHold-color);
   cursor: pointer;
   border: thin solid;
   padding: 0.25rem 1.25rem;
   border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  transition: box-shadow 0.2s ease;
   &:hover{
-    background-color: var(--color,$enabled-btn);
-    color: var(--background-color,$textPrimary-color);
-  }
-  &:hover:not(:disabled) { 
-    background-color: var(--color, $enabled-btn);
-    color: var(--background-color, $textPrimary-color);
+    background-color: var(--color,$primary-color);
+    color: var(--background-color,$inHold-color);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   }
   &:disabled {
     background-color: rgb(206, 203, 203);
@@ -21,20 +20,18 @@
     cursor: not-allowed; 
   }
 }
-.Primary {
-    
+.Primary {   
     --color: rgb(40, 91, 186);
     --background-color: white;
 }
 
-.Secondary {
-  
+.Secondary {  
     --color: red;
     --background-color: white;
 }
 
-.Tertiary {
-    
+.Tertiary {   
     --color: green;
     --background-color: white;
 }
+

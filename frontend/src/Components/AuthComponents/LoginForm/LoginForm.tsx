@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 import styles from './LoginForm.module.scss';
 import { useNavigate } from "react-router-dom";
 import { initialState, loginReducer } from "../../../reducer/loginReducer";
-import { useGetUserQuery, useSendOtpMutation, useVerifyOtpMutation } from "../../../services/authapi";
+import { useSendOtpMutation, useVerifyOtpMutation } from "../../../services/authapi";
 import Button from "../../GenericComponents/Button/Button";
 import EmailForm from "../EmailForm/EmailForm";
 import VerifyOTPForm from "../VerifyOTPForm/VerifyOTPForm";
@@ -57,7 +57,7 @@ const LoginForm = () => {
       const token = dataObj.data.accessToken
       console.log(token)
       localStorage.setItem("token",token)
-      
+      navigate("/")
     }
     catch(error) {
       console.error(error)
