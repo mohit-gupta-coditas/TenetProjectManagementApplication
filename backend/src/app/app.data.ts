@@ -9,3 +9,9 @@ export enum GLOBAL_ROLE {
   ADMIN = 'admin',
   MEMBER = 'member'
 }
+
+export const CREATION_ROLE = {
+  superAdmin: GLOBAL_ROLE.ADMIN,
+  admin: GLOBAL_ROLE.MEMBER,
+  member: GLOBAL_ROLE.MEMBER
+}

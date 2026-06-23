@@ -19,7 +19,7 @@ export default {
       {
         name: 'Mohit',  
         email: 'darshan.deshmukh@coditas.com',
-        password: 'admin',
+        password: 'superAdmin',
         globalRole: 'admin'  
       }
     )
@@ -32,6 +32,12 @@ export default {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('companies', null, {});
+    await queryInterface.delete(
+      null,
+      'users', 
+      {
+        email: 'darshan.deshmukh@coditas.com'
+      }
+    );
   }
 };

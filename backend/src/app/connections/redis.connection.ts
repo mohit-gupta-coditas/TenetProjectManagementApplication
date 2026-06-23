@@ -16,7 +16,7 @@ export const redisSetup = async () => {
   } catch(err) {
     console.log('Redis Client Error', err)
     throw {
-      message: 'SOMETHING WENT WRONG'
+      message: 'REDIS NOT CONNECTED'
     };
   }
 }

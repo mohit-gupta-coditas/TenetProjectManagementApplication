@@ -1,9 +1,9 @@
 'use strict';
 
-import { DataTypes } from 'sequelize';
+const { DataTypes } = require('sequelize');
 
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up (queryInterface, Sequelize) {
     /**
      * Add altering commands here.
@@ -11,33 +11,27 @@ export default {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('companies', {
+    await queryInterface.createTable(
+      'roles',
+      {
         id: {
           type: DataTypes.UUID,
           primaryKey: true,
           allowNull: false,
-          defaultValue: Sequelize.Sequelize.fn('uuidv4')  
+          defaultValue: Sequelize.Sequelize.fn('uuidv4')
         },
         name: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        email: {
-          type: DataTypes.STRING,
-          allowNull: false
+        companyId: {
+          type: DataTypes.UUID,
+          allowNull: false,
         },
-        logoUrl: {
-          type: DataTypes.STRING,
-          allowNull: false
+        createdBy: {
+          type: DataTypes.UUID,
+          allowNull: true
         },
-        subscription: {
-          type: DataTypes.ENUM(
-            'half',
-            'full',
-            'basic'
-          ),
-          allowNull: false
-        }, 
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
@@ -53,7 +47,38 @@ export default {
           allowNull: false,
           defaultValue: false
         }
-    });
+      }
+    );
+
+    await queryInterface.addConstraint(
+      'roles',
+      {
+        type: 'foreign key',
+        fields: ['companyId'],
+        name: 'fk_company_and_domain',
+        references: {
+          table: 'companies',
+          field: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'NO ACTION'
+      }
+    );
+
+    await queryInterface.addConstraint(
+      'roles',
+      {
+        type: 'foreign key',
+        fields: ['createdBy'],
+        name: 'fk_domains_createdBy_user',
+        references: {
+          table: 'users',
+          field: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'NO ACTION'
+      }
+    );
   },
 
   async down (queryInterface, Sequelize) {
@@ -63,7 +88,6 @@ export default {
      * Example:
      * await queryInterface.dropTable('users');
      */
-
-    await queryInterface.dropTable('companies');
+    await queryInterface.dropTable('roles');
   }
 };
