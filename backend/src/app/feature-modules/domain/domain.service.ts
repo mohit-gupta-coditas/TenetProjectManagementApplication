@@ -34,7 +34,7 @@ const getAllDomain = async (options: DomainOptions, companyId: string)=> {
     }
 
     where.isDeleted = {
-      [Op.eq] : (options.isDeleted === false) ? options.isDeleted : true
+      [Op.eq] : (options.isDeleted === true) ? true : false
     }
     
     if(options.orderBy) {

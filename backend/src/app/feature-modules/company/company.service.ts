@@ -93,9 +93,9 @@ const getAllCompanies = async (options: CompanyOptions) => {
         [Op.eq] : options.subscription
       }
     }
-
+    
     where.isDeleted = {
-      [Op.eq] : (options.isDeleted === false) ? false : true
+      [Op.eq] : (options.isDeleted === true) ? true : false
     }
 
     if(options.orderBy) {

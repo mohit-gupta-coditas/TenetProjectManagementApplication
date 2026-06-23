@@ -23,27 +23,6 @@ const setPassword = async (password: string, userId: string) => {
   }
 }
 
-const makePassword = async (email: string) => {
-  try {
-    const user = await userService.getUser({email});
-    
-    const token = signToken(
-      {
-        userId: user.id,
-        companyId: user.companyId,
-        globalRole: user.globalRole,
-        passwordVersion: user.passwordVersion
-      },
-      privateKey,
-      env.PASSWORD_TOKEN_TIME
-    );
-
-    return {token};
-  } catch(err) {
-    throw err;
-  }
-}
-
 const getTokenDetails = async (userId: string) => {
   try{
     const user = await userService.getUser({id: userId});
@@ -158,6 +137,5 @@ export default {
   sendOTP,
   verifyOTP,
   setPassword,
-  makePassword,
   getTokenDetails
 }

@@ -37,7 +37,7 @@ router.post(
   }
 )
 
-router.post(
+router.get(
   '/tokenDetails',
   {},
   async (req, res, next) => {
@@ -64,20 +64,6 @@ router.post(
       next(err);
     }
   }
-)
-
-router.post(
-  '/makePassword',
-  {isPublic: true},
-  body(ZLogin.pick({email: true})),
-  async (req, res, next) => {
-    try {
-      const result = await authService.makePassword(req.body.email);
-      res.send(new ResposneHandler(result));
-    } catch(err) {
-      next(err);
-    }
-  }
-)
+);
 
 export default router.setRouter('/auth');

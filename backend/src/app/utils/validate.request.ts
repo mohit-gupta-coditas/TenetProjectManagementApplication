@@ -1,12 +1,14 @@
 import type { NextFunction, Request, Response } from "express";
-import type { ZodObject } from "zod";
+import type {z, ZodObject  } from "zod";
+import type { AnyZodObject } from "zod/v3";
+import type { Options } from "../app.types.js";
 
 const check = (type: 'body' | 'query' | 'params') => (schema: ZodObject) => (req: Request, res: Response, next: NextFunction) => {
   try {
     if(type === 'query') {
-      req.options = schema.parse(req.query);
+      req.options = schema.parse(req.query) as Options;
     } else {
-      req[type] = schema.parse(req[type]);
+      req[type] = schema.parse(req[type]); 
     }
     next();
   } catch(err: any) {

@@ -1,4 +1,5 @@
 import z from "zod";
+import { ZOptions } from "../../app.types.js";
 
 export const ZCompany = z.object({
   id: z.uuid(),
@@ -19,7 +20,7 @@ export const ZCompany = z.object({
   updatedAt: z.date().optional()
 });
 
-export const ZCompanyOptions = z.object({
+export const ZCompanyOptions = ZOptions.extend(z.object({
   search: z.string(`'search' value must not be empty`).optional(),
   subscription: z.enum(['full', 'half', 'basic']).optional(),
   isDeleted: z.string().transform(value => {
@@ -30,12 +31,8 @@ export const ZCompanyOptions = z.object({
     } else {
       throw new Error(`'isDeleted' value should be either 'true' or 'false'`)
     }
-  }),
-  limit: z.coerce.number(`'limit' must be a valid number`),
-  offset: z.coerce.number(`'offset' must be a valid number`),
-  sortBy: z.string().default("name"),
-  orderBy: z.enum(["ASC", "DESC"]).default("ASC")
-});
+  }).optional(),
+}).shape);
 
 export const ZCompanyUpdate = z.object({
   name: z.string(`'name' must be a valid string`).trim().min(1).optional(),

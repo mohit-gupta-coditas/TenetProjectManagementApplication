@@ -3,7 +3,7 @@ import { uploadToS3 } from "../../utils/aws.helper.js";
 import { ResposneHandler } from "../../utils/response.handler.js";
 import { body, params, query } from "../../utils/validate.request.js";
 import companyService from "./company.service.js";
-import { ZCompany, ZCompanyOptions, ZCompanyUpdate } from "./company.types.js";
+import { ZCompany, ZCompanyOptions, ZCompanyUpdate, type CompanyOptions } from "./company.types.js";
 
 const router = customRouter();
 
@@ -51,7 +51,7 @@ router.get(
   query(ZCompanyOptions),
   async (req, res, next) => {
     try {
-      const result = await companyService.getAllCompanies(req.options);
+      const result = await companyService.getAllCompanies(req.options as CompanyOptions);
       res.send(new ResposneHandler(result.map(company => company.toSafeJSON())));
     } catch(err) {
       next(err);

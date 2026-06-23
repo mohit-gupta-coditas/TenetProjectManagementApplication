@@ -1,4 +1,5 @@
 import z from "zod";
+import { ZOptions } from "../../app.types.js";
 
 export const ZUser = z.object({
   id: z.uuid(),
@@ -23,7 +24,7 @@ export const ZUser = z.object({
   createdBy: z.uuid(`createdBy must be a valid uuid`).optional()
 });
 
-export const ZUserOptions = z.object({
+export const ZUserOptions = ZOptions.extend(z.object({
   search: z.string().optional(),
   isDeleted:z.string().transform( value => {
       if(value === 'true') {
@@ -35,11 +36,8 @@ export const ZUserOptions = z.object({
       }
     }).optional(),
   globalRole: z.enum(['admin','member']).optional(),
-  limit: z.coerce.number(`limit must be a valid number`),
-  offset: z.coerce.number(`offset must be a valid number`),
-  sortBy: z.string().default("email"),
-  orderBy: z.enum(["ASC", "DESC"]).default("ASC")
-});
+
+}).shape);
 
 export const ZUserUpdate = z.object({
   name: z.string(`'name' must be a valid string`).trim().min(1).optional(),
